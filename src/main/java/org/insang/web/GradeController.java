@@ -2,8 +2,8 @@ package org.insang.web;
 
 import java.util.List;
 
-import org.insang.domain.Member;
-import org.insang.service.Memberservice;
+import org.insang.domain.Student;
+import org.insang.service.StudentService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,46 +18,46 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class DemoController {
+public class GradeController {
 	
 	@Autowired
-	private Memberservice memberService;
+	private StudentService studentService;
 	
 	@RequestMapping(value="/", method=RequestMethod.GET)
-	public ModelAndView list(@ModelAttribute Member member, ModelAndView mav) {
+	public ModelAndView list(@ModelAttribute Student student, ModelAndView mav) {
 		mav.setViewName("create");
-		Iterable<Member> members = memberService.findAll();
-		mav.addObject("members", members);
+		Iterable<Student> students = studentService.findAll();
+		mav.addObject("students", students);
 		return mav;
 	}
 	
 	@RequestMapping(value="/deleteall", method=RequestMethod.POST)
-	public ModelAndView deleteAll(@ModelAttribute Member member, ModelAndView mav) {
-		memberService.deleteAll();
+	public ModelAndView deleteAll(@ModelAttribute Student student, ModelAndView mav) {
+		studentService.deleteAll();
 		ModelAndView r= new ModelAndView("redirect:/");
 		return r;
 	}
 
 	@RequestMapping(value="/edit", method=RequestMethod.GET)
 	public ModelAndView edit(@RequestParam Long id, ModelAndView mav) {
-		Member member = memberService.findById(id);	
+		Student student = studentService.findById(id);	
 		mav.setViewName("edit");
-		mav.addObject("member", member);
+		mav.addObject("student", student);
 		return mav;
 	}
 	
 	@RequestMapping(value={"/", "/edit"}, method=RequestMethod.POST)
-	public ModelAndView update(@ModelAttribute @Validated Member member, BindingResult result, 
+	public ModelAndView update(@ModelAttribute @Validated Student student, BindingResult result, 
 			ModelAndView mav) {
 		
 		ModelAndView r=null;
 		if (!result.hasErrors()) {
-			memberService.create(member);
+			studentService.addStudentGrade(student);
 			r= new ModelAndView("redirect:/");
 		} else {
 			mav.setViewName("create");
-			Iterable<Member> members = memberService.findAll();
-			mav.addObject("members", members);
+			Iterable<Student> students = studentService.findAll();
+			mav.addObject("students", students);
 			r = mav;
 		}
 		return r;
@@ -65,7 +65,7 @@ public class DemoController {
 	
 	@RequestMapping(value="/delete", method=RequestMethod.POST)
 	public ModelAndView delete(@RequestParam Long id, ModelAndView mav) {
-		memberService.delete(id);
+		studentService.deleteStudentGrade(id);
 		return new ModelAndView("redirect:/");
 	}
 }

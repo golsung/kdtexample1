@@ -3,54 +3,74 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
 	<link rel="stylesheet" type="text/css" href="mystyle.css" />
-	<title id="title1">New Member Page</title>
+	<title id="title1">성적 입력</title>
 </head>
 <body>
 	<table>
-		<form method="post" action="/" th:object="${member}">
-		<tr>
-			<td><label for="name">이름</label></td>
-			<td><input type="text" id="name1" name="name" th:value="*{name}" th:errorclass="err" />
-			<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:errorclass="err"></div></td>
-		</tr>
-		<tr>
+		<form method="post" action="/" th:object="${student}">
+			<tr>
+				<td><label for="name">이름</label></td>
+				<td><input type="text" id="name" name="name" th:value="*{name}" th:errorclass="err" />
+				<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:errorclass="err"></div></td>
+			</tr>
+			<tr>
+				<td><label for="major">전공</label></td>
+				<td><input type="text" id="major" name="major" th:value="*{major}" th:errorclass="err" />
+				<div th:if="${#fields.hasErrors('major')}" th:errors="*{major}" th:errorclass="err"></div></td>
+			</tr>
+			<!--  		<tr>
 			<td><label for="email">이메일</label></td>
 			<td><input type="text" id="email1" name="email" th:value="*{email}" th:errorclass="err" />
 			<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" th:errorclass="err"></div></td>
 		</tr>	
-		<tr>
-			<td><label for="score">점수</label></td>
-			<td><input type="text" id="score1" name="score" th:value="*{score}" />
-			<div th:if="${#fields.hasErrors('score')}" th:errors="*{score}" th:errorclass="err"></div></td>
-		</tr>	
-		<tr>
-			<td></td><td><input type="submit" id="btnCreateMember" style="margin-left: 50%" /></td>
-		</tr>
+	-->
+			<tr>
+				<td><label for="midScore">중간점수</label></td>
+				<td><input type="text" id="midScore" name="midScore" th:value="*{midScore}" />
+				<div th:if="${#fields.hasErrors('midScore')}" th:errors="*{midScore}" th:errorclass="err"></div></td>
+			</tr>
+			<tr>
+				<td><label for="finalScore">기말점수</label></td>
+				<td><input type="text" id="finalScore" name="finalScore" th:value="*{finalScore}" />
+				<div th:if="${#fields.hasErrors('finalScore')}" th:errors="*{finalScore}" th:errorclass="err"></div></td>
+			</tr>
+			<tr>
+				<td><label for="hwScore">과제점수</label></td>
+				<td><input type="text" id="hwScore" name="hwScore" th:value="*{hwScore}" />
+				<div th:if="${#fields.hasErrors('hwScore')}" th:errors="*{hwScore}" th:errorclass="err"></div></td>
+			</tr>
+			<tr>
+				<td><input type="submit" id="btnAddStudentGrade" style="margin-left: 50%" /></td><td></td>
+			</tr>
 		</form>
-		</table>		
+	</table>
 	<hr/>
 	<table>
-		<tr th:each="memb: ${members}">
-			<td th:text="${memb.name}">Insang</td>
-			<td th:text="${memb.email}">insang@hansung.ac.kr</td>	
-			<td th:text="${memb.score}">0</td>		
+		<tr th:each="student: ${students}">
+			<td th:text="${student.name}">Insang</td>
+			<td th:text="${student.major}">컴퓨터공학</td>	
+			<td th:text="${student.midScore}">0</td>	
+			<td th:text="${student.finalScore}">0</td>	
+			<td th:text="${student.hwScore}">0</td>
+			<td th:text="${student.totalScore}">0</td>
+			<td th:text="${student.grade}">F</td>
 			<td>
 				<form method="get" action="/edit">
-					<input type="submit" value="편집" />
-					<input type="hidden" name="id" th:value="${memb.id}" />
+					<input type="submit" id="btnEditStudentGrade"  value="편집" />
+					<input type="hidden" name="id" th:value="${student.id}" />
 				</form>
 			</td>
 			<td>
 				<form method="post" action="/delete">
-					<input type="submit" value="삭제" />
-					<input type="hidden" name="id" th:value="${memb.id}" />
+					<input type="submit" id="btnDeleteStudentGrade" value="삭제" />
+					<input type="hidden" name="id" th:value="${student.id}" />
 				</form>
 			</td>	
 		</tr>
 	</table>
-	<div th:if="${not #lists.isEmpty(members)}">
+	<div th:if="${not #lists.isEmpty(students)}">
 		<form method="post" action="/deleteall">
-			<input id="delall" type="submit" value="delete all" />
+			<input id="btnDeleteAll" type="submit" value="delete all" />
 		</form>
 	</div>
 </body>

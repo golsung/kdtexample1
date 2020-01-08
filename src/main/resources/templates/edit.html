@@ -3,26 +3,34 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
 	<link rel="stylesheet" type="text/css" href="mystyle.css" />
-	<title>Edit page</title>
+	<title>성적 수정</title>
 </head>
 <body>
 	<table>
-		<form method="post" action="/" th:object="${member}">
-			<input type="hidden" name="id" th:value="${member.id}" />
+		<form method="post" action="/" th:object="${student}">
+			<input type="hidden" name="id" th:value="${student.id}" />
 		<tr>
 			<td><label for="name">이름</label></td>
-			<td><input type="text" name="name" th:value="*{name}" /></td>
+			<td><input type="text" name="name" th:value="${student.name}" /></td>
 		</tr>
 		<tr>
-			<td><label for="email">이메일</label></td>
-			<td><input type="text" name="email" th:value="*{email}" /></td>
+			<td><label for="major">전공</label></td>
+			<td><input type="text" name="major" th:value="${student.major}" /></td>
 		</tr>	
 		<tr>
-			<td><label for="score">점수</label></td>
-			<td><input type="text" name="score" th:value="*{score}" /></td>
+			<td><label for="midscore">중간점수</label></td>
+			<td><input type="text" name="midScore" th:value="${student.midScore}" /></td>
+		</tr>
+		<tr>
+			<td><label for="finalScore">기말점수</label></td>
+			<td><input type="text" name="finalScore" th:value="${student.finalScore}" /></td>
 		</tr>	
 		<tr>
-			<td></td><td><input type="submit" style="margin-left: 50%" /></td>
+			<td><label for="hwScore">과제점수</label></td>
+			<td><input type="text" name="hwScore" th:value="${student.hwScore}" /></td>
+		</tr>		
+		<tr>
+			<td><input type="submit" id="btnEditStudentGrade" style="margin-left: 50%" /></td><td></td>
 		</tr>
 		</form>
 		</table>		
